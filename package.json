@@ -1,0 +1,27 @@
+{
+  "name": "ibm",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "is-number": "^7.0.0",
+    "line-reader": "^0.4.0",
+    "read-line": "^0.1.2",
+    "save": "^2.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chuangchun/ibm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chuangchun/ibm/issues"
+  },
+  "homepage": "https://github.com/chuangchun/ibm#readme",
+  "description": ""
+}

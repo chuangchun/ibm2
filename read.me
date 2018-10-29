@@ -1,0 +1,88 @@
+I only checked in the package.json and the necessary js files. To run the app, you need to "npm install" to install all the necessar packages.
+After that run
+
+node app.js
+
+Here is a list of commands this supports. All are post, so you need to provide a body.
+
+url: localhost:3000/getAll
+body: {}
+
+url: localhost:3000/getAllPaginated
+body:
+
+{
+	"requestType" : "getAllPaginated",
+	"start" : 100,
+	"end" : 110
+}
+
+url: localhost:3000/filter
+body:
+{
+	"requestType" : "filter",
+	"operator" : "GREATER-THAN",
+	"field" : "age",
+	"value" : "10",
+	"start" : 0,
+	"end" : 10
+},
+
+{
+	"requestType" : "filter",
+	"operator" : "STARTSWITH",
+	"field" : "first_name",
+	"value" : "ferdin"
+},
+
+{
+	"requestType" : "filter",
+	"operator" : "STARTSWITH",
+	"field" : "first_name",
+	"value" : "ferdin",
+	"sortOrder" : "desc",
+	"start" : 20,
+	"end" : 30
+}
+
+url: localhost:3000/filters
+body:
+{
+	"requestType" : "filters",
+	"filters" : [ { "field" : "age", "operator" : "GREATER-THAN", "value" : 15 },
+	              { "field" : "first_name", "operator" : "STARTSWITH", "value" : "and" },
+	              { "field" : "gender", "operator" : "STARTSWITH", "value" : "male" }
+	            ],
+	"start" : 0,
+	"end" : 10
+}
+
+You can replace operator, field, sortOrder, value with whatever that is valid.
+
+Here is a sample response.
+
+
+{
+    "operator": "filter",
+    "field": "first_name",
+    "value": "ferdin",
+    "total_count": 1,
+    "start": 0,
+    "end": 10,
+    "data": [
+        {
+            "id": 101,
+            "first_name": "Ferdinande",
+            "last_name": "Shilton",
+            "email": "fshilton2s@paginegialle.it",
+            "gender": "Female",
+            "age": 76
+        }
+    ]
+}
+
+We return the total_count for this filter result, and number of items in this page.
+The assumption is that client will be able to calculate the number of pages and the url for each pagination.
+
+
+
