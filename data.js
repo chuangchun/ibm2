@@ -32,29 +32,29 @@ function compare(x, y)
     else return 1;
 }
 
-function filterByString(data, filter)
+function filterByString(x, filter)
 {
     if ( typeof filter.value !== 'string' ) filter.value = filter.value.toString();
-    let out = [];
+    let out = false;
     switch ( filter.operator ) {
         case GreaterThan:
-            out = data.filter(x => x[filter.field].toLowerCase() > filter.value);
+            out = x[filter.field].toLowerCase() > filter.value;
             break;
         case StartsWith:
-            out = data.filter(x => x[filter.field].toLowerCase().startsWith(filter.value));
+            out = x[filter.field].toLowerCase().startsWith(filter.value);
             break;
         case Contains:
-            out = original.filter(x => x[filter.field].toLowerCase().indexOf(filter.value) != -1);
+            out = x[filter.field].toLowerCase().indexOf(filter.value) != -1;
             break;
         default:
     }
     return out;
 }
 
-function filterByNumber(data, filter)
+function filterByNumber(x, filter)
 {
-    if ( filter.operator !== 'GREATER-THAN') return {};
-    return data.filter(x => x[filter.field] > filter.value);
+    if ( filter.operator !== 'GREATER-THAN') return false;
+    return x[filter.field] > filter.value;
 }
 
 function sort(data, field, sortOrder)
@@ -179,11 +179,14 @@ function doFilters(filters, key, value, sortOrder)
         }
 
         console.log("filter: rebuild cache for:", key, value);
-        let data = original;
-        for (let i = 0; i < filters.length; ++i)
-        {
-            data = filters[i].isString ? filterByString(data, filters[i]) : filterByNumber(data, filters[i]);
-        }
+        let data = original.filter(x => {
+            let out = true;
+            for (let i = 0; i < filters.length; ++i)
+            {
+                 out &= filters[i].isString ? filterByString(x, filters[i]) : filterByNumber(x, filters[i]);
+            }
+            return out;
+        });
 
         if ( sortOrder !== undefined )
         {
